@@ -1,41 +1,23 @@
 ﻿Shader "Custom/02" {
-	Properties {
-		_Color ("Color", Color) = (1,1,1,1)
-		_MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_Glossiness ("Smoothness", Range(0,1)) = 0.5
-		_Metallic ("Metallic", Range(0,1)) = 0.0
-	}
-	SubShader {
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		
-		CGPROGRAM
-		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows
+	SubShader{
+		Pass {
+			CGPROGRAM
 
-		// Use shader model 3.0 target, to get nicer looking lighting
-		#pragma target 3.0
+#pragma vertex vert
+			float4 vert(float4 v : POSITION) : SV_POSITION // 计算模型坐标到裁剪面坐标
+			{
+				return mul(UNITY_MATRIX_MVP, v);
+			}
 
-		sampler2D _MainTex;
+#pragma fragment frag
+			fixed4 frag() : SV_Target // 计算每个像素点的颜色值
+			{
+				return fixed4(0.5,0.5,1,1);
+			}
 
-		struct Input {
-			float2 uv_MainTex;
-		};
-
-		half _Glossiness;
-		half _Metallic;
-		fixed4 _Color;
-
-		void surf (Input IN, inout SurfaceOutputStandard o) {
-			// Albedo comes from a texture tinted by color
-			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-			o.Albedo = c.rgb;
-			// Metallic and smoothness come from slider variables
-			o.Metallic = _Metallic;
-			o.Smoothness = _Glossiness;
-			o.Alpha = c.a;
+			ENDCG
 		}
-		ENDCG
+		
 	}
 	FallBack "Diffuse"
 }
