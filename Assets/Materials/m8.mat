@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: m4
-  m_Shader: {fileID: 4800000, guid: 447eb2b1ab549024c94d2aea65df8895, type: 3}
+  m_Name: m8
+  m_Shader: {fileID: 4800000, guid: 59b1bd5bc87e404448ee05e482ed516a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_CustomRenderQueue: -1
@@ -46,4 +46,4 @@ Material:
       second: {r: 1, g: 0.72794116, b: 0.72794116, a: 1}
     - first:
         name: _Diffuse
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 0.8014706, g: 0.22983345, b: 0.22983345, a: 1}
