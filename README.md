@@ -5,3 +5,5 @@
 - 文本教程 [http://www.cnblogs.com/polobymulberry/p/4314147.html](http://www.cnblogs.com/polobymulberry/p/4314147.html "http://www.cnblogs.com/polobymulberry/p/4314147.html")
 - ShaderToy [https://www.shadertoy.com/](https://www.shadertoy.com/ "https://www.shadertoy.com/")
 - VS写Shaderlab语法高亮插件 [https://github.com/wudixiaop/ShaderlabVS](https://github.com/wudixiaop/ShaderlabVS "https://github.com/wudixiaop/ShaderlabVS")
+
+最后，以及冯乐乐的CSDN博客和她的书《Unity Shader入门精要》
