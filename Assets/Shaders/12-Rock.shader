@@ -1,10 +1,8 @@
-﻿Shader "Custom/11-Texture" { // 纹理贴图，BlinnPhong光照模型
+﻿Shader "Custom/12-Rock" { 
 	Properties{
 		//_Diffuse("Diffuse Color", Color) = (1,1,1,1) // 可在编辑器面板定义材质自身色彩
 		_MainTex("Main Tex",2D) = "white"{} // 纹理贴图
 		_Color("Color", Color) = (1,1,1,1)  // 控制纹理贴图的颜色
-		_Specular("Specular Color", Color) = (1,1,1,1) // 高光的颜色
-		_Gloss("Gloss", Range(8,200)) = 10 // 高光的参数
 	}
 	SubShader{
 		Pass {
@@ -21,7 +19,6 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST; // 命名是固定的贴图名+后缀"_ST"，4个值前两个xy表示缩放，后两个zw表示偏移
 			fixed4 _Color;
-			half _Gloss;
 
 			struct a2v
 			{
@@ -66,21 +63,9 @@
 				fixed3 texColor = tex2D(_MainTex, f.uv.xy) * _Color.rgb;
 				// 漫反射Diffuse颜色 = 直射光颜色 * max(0, cos(光源方向和法线方向夹角)) * 材质自身色彩（纹理对应位置的点的颜色）
 				fixed3 diffuse = _LightColor0 * max(0, dot(normalDir, lightDir)) * texColor; // 颜色融合用乘法
-				
-				// 反射光的方向
-				//fixed3 reflectDir = normalize(reflect(-lightDir, normalDir)); // 参数：平行光的入射方向，法线方向。而lightDir光照方向是从模型表面到光源的，所以取负数。
-				// 视野方向 = 摄像机的位置 - 当前点的位置
-				fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - f.worldVertex);
-				// 光照方向和视野方向的夹角的平分线
-				fixed3 halfDir = normalize(lightDir + viewDir);
-				/*
-				 * 高光反射Specular = 直射光 * pow(max(0, cos(反射光方向和视野方向的夹角)), 高光反射参数)
-				 * BlinnPhong光照模型：Specular=直射光 * pow( max(cosθ,0),10)  θ是法线和x的夹角  x是平行光和视野方向的平分线
-				 */
-				fixed3 specular = _LightColor0.rgb * pow(max(dot(normalDir, halfDir), 0), _Gloss);
-				
-				// 最终颜色 = 漫反射 + 环境光 + 高光反射
-				fixed3 tempColor = diffuse + specular + ambient * texColor; // 让环境光也跟纹理颜色做融合，防止环境光使得纹理效果看起来朦胧
+			
+				// 最终颜色 = 漫反射 + 环境光 
+				fixed3 tempColor = diffuse + ambient * texColor; // 让环境光也跟纹理颜色做融合，防止环境光使得纹理效果看起来朦胧
 
 				return fixed4(tempColor, 1); // tempColor是float3已经包含了三个数值
 			}
